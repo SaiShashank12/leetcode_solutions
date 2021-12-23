@@ -1,13 +1,18 @@
 class Solution:
-    
     def jump(self, nums: List[int]) -> int:
-        jumps=0
-        current_jump_end=0
-        farthest=0
-        for i in range(len(nums)-1):
-            farthest=max(farthest,i+nums[i])
+        n=len(nums)
+        import sys
+        @lru_cache(None)
+        def helper(idx):
+            if idx==n-1:
+                return 0
+            if idx+nums[idx]>=n-1:
+                return 1
+            ans=sys.maxsize
             
-            if i==current_jump_end:
-                jumps+=1
-                current_jump_end=farthest
-        return jumps
+            for i in range(1,nums[idx]+1):
+                ans=min(ans,1+helper(idx+i))
+            
+            return ans
+        
+        return helper(0)
