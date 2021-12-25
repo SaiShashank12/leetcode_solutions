@@ -1,32 +1,35 @@
 # Definition for a binary tree node.
 # class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
 class Solution:
-    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
-        def Sum_path(root,target,result):
+    
+    def recurseTree(self, node, remainingSum, pathNodes, pathsList):
+        
+        if not node:
+            return 
+        
+        # Add the current node to the path's list
+        pathNodes.append(node.val)
+        
+        # Check if the current node is a leaf and also, if it
+        # equals our remaining sum. If it does, we add the path to
+        # our list of paths
+        if remainingSum == node.val and not node.left and not node.right:
+            pathsList.append(list(pathNodes))
+        else:    
+            # Else, we will recurse on the left and the right children
+            self.recurseTree(node.left, remainingSum - node.val, pathNodes, pathsList)
+            self.recurseTree(node.right, remainingSum - node.val, pathNodes, pathsList)
             
-            if not root:
-                #result.pop()
-                return 
-            target-=root.val
-            result.append(root.val)
-            if target==0 and not root.left and not root.right:
-                ret=[i for i in result]
-                Compelet_result.append(ret)
-                result.pop()
-                return 
-            
-            if root.left:
-                
-                Sum_path(root.left,target,result)
-            if root.right:
-                Sum_path(root.right,target,result)
-            
-            result.pop() 
-        Compelet_result=[]
-        Sum_path(root,targetSum,[])
-        return Compelet_result
-            
+        # We need to pop the node once we are done processing ALL of it's
+        # subtrees.
+        pathNodes.pop()    
+    
+    def pathSum(self, root: TreeNode, sum: int) -> List[List[int]]:
+        pathsList = []
+        self.recurseTree(root, sum, [], pathsList)
+        return pathsList
