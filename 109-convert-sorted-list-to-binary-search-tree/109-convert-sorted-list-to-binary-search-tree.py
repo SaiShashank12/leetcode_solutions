@@ -28,9 +28,10 @@ class Solution:
             prev,mid=half(head)
             if prev:
                 prev.next=None
-            else:
-                head=None
             root=TreeNode(mid.val)
+            if head==mid:
+                return root
+            
             
             root.left=helper(head)
             root.right=helper(mid.next)
