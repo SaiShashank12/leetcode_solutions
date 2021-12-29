@@ -1,33 +1,23 @@
 class Solution:
-    def connect(self, root: 'Node') -> 'Node':
-        
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
         if not root:
-            return root
-        
-        # Start with the root node. There are no next pointers
-        # that need to be set up on the first level
-        leftmost = root
-        
-        # Once we reach the final level, we are done
-        while leftmost.left:
+            return
             
-            # Iterate the "linked list" starting from the head
-            # node and using the next pointers, establish the 
-            # corresponding links for the next level
-            head = leftmost
-            while head:
-                
-                # CONNECTION 1
-                head.left.next = head.right
-                
-                # CONNECTION 2
-                if head.next:
-                    head.right.next = head.next.left
-                
-                # Progress along the list (nodes on the current level)
-                head = head.next
-            
-            # Move onto the next level
-            leftmost = leftmost.left
+        level = deque([root])
         
-        return root 
+        while level:
+            nextLevel = deque()
+            next = None
+            
+            while level:
+                node = level.pop()
+                
+                if node.left:
+                    nextLevel.appendleft(node.right)
+                    nextLevel.appendleft(node.left)
+
+                node.next, next = next, node
+                
+            level = nextLevel
+                
+        return root
