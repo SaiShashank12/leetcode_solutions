@@ -5,24 +5,25 @@ class Solution:
     
         if len(edges) != n - 1: return False
 
+        # Create an adjacency list.
         adj_list = [[] for _ in range(n)]
         for A, B in edges:
             adj_list[A].append(B)
             adj_list[B].append(A)
 
-        parent = {0: -1}
-        queue = collections.deque([0])
+        # We still need a seen set to prevent our code from infinite
+        # looping if there *is* cycles (and on the trivial cycles!)
+        seen = {0}
+        stack = [0]
 
-        while queue:
-            node = queue.popleft()
+        while stack:
+            node = stack.pop()
             for neighbour in adj_list[node]:
-                if neighbour == parent[node]:
+                if neighbour in seen:
                     continue
-                if neighbour in parent:
-                    return False
-                parent[neighbour] = node
-                queue.append(neighbour)
+                seen.add(neighbour)
+                stack.append(neighbour)
 
-        return len(parent) == n
+        return len(seen) == n
             
             
