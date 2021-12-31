@@ -1,18 +1,11 @@
 class Solution:
-    def maxAncestorDiff(self, root: TreeNode) -> int:
-        if not root:
-            return 0
-
-        def helper(node, cur_max, cur_min):
-            # if encounter leaves, return the max-min along the path
-            if not node:
-                return cur_max - cur_min
-            # else, update max and min
-            # and return the max of left and right subtrees
-            cur_max = max(cur_max, node.val)
-            cur_min = min(cur_min, node.val)
-            left = helper(node.left, cur_max, cur_min)
-            right = helper(node.right, cur_max, cur_min)
-            return max(left, right)
-
-        return helper(root, root.val, root.val)
+    def maxAncestorDiff(self, root: Optional[TreeNode]) -> int:
+        def dfs(node, min_ancestor, max_ancestor, result):
+            if node is None:
+                return max_ancestor - min_ancestor
+            min_ancestor = min(min_ancestor, node.val)
+            max_ancestor = max(max_ancestor, node.val)
+            result = max(dfs(node.left, min_ancestor, max_ancestor, result), 
+                         dfs(node.right, min_ancestor, max_ancestor, result))
+            return result
+        return dfs(root, root.val, root.val, 0) 
