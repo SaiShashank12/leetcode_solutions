@@ -1,23 +1,26 @@
 class Solution:
-    def countComponents(self, n: int, edges: List[List[int]]) -> int:
-        Graph=[set() for _ in range(n)]
-        for i in edges:
-            Graph[i[0]].add(i[1])
-            Graph[i[1]].add(i[0])
-        visit=[]
-        count=0
-        for i in range(len(Graph)):
-            if i in visit:
-                continue
-            queue=[i]
-            count+=1
-            while queue:
-                tmp=queue.pop(0)
-                if tmp not in visit:
-                    visit.append(tmp)
-                else:
-                    continue
-                queue.extend(list(Graph[tmp]))
-        return count
-            
+    def traversal(self, g, visited, v):
+        visited.add(v)
         
+        for neigb in g[v]:
+            if neigb not in visited:
+                self.traversal(g, visited, neigb)
+                
+    def countComponents(self, n: int, edges: List[List[int]]) -> int:
+        if n == 0:
+            return 0
+        
+        g = collections.defaultdict(list)
+        visited = set()
+        
+        for (e1,e2) in edges:
+            g[e1].append(e2)
+            g[e2].append(e1)
+        
+        res = 0
+        for v in range(n):
+            if v not in visited:
+                res += 1
+                self.traversal(g, visited, v)
+        
+        return res
