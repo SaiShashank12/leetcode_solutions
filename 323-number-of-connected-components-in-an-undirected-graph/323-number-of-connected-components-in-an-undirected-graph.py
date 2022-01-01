@@ -10,13 +10,11 @@ class Solution:
         if n == 0:
             return 0
         
-        g = collections.defaultdict(list)
+        g=[set() for _ in range(n)]
+        for i in edges:
+            g[i[0]].add(i[1])
+            g[i[1]].add(i[0])
         visited = set()
-        
-        for (e1,e2) in edges:
-            g[e1].append(e2)
-            g[e2].append(e1)
-        
         res = 0
         for v in range(n):
             if v not in visited:
