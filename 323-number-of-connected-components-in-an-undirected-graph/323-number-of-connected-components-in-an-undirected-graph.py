@@ -12,7 +12,7 @@ class Solution:
             queue=[i]
             count+=1
             while queue:
-                tmp=queue.pop()
+                tmp=queue.pop(0)
                 if tmp not in visit:
                     visit.append(tmp)
                 else:
