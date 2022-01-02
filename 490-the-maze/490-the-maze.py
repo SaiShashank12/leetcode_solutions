@@ -1,33 +1,19 @@
 class Solution:
-    # Approach 1: DFS - Iterative
-    def hasPath(self,maze, start, destination):
-        """
-        :type maze: List[List[int]]
-        :type start: List[int]
-        :type destination: List[int]
-        :rtype: bool
-        """
-        nr, nc = len(maze), len(maze[0])
-        actions = [(-1,0), (+1,0), (0,-1), (0,+1)]
-        stack = [start]
+    def hasPath(self, maze: List[List[int]], start: List[int], destination: List[int]) -> int:
+        stack=[start]
+        actions=[(0,-1),(0,+1),(-1,0),(+1,0)]
+        m,n=len(maze),len(maze[0])
         while stack:
-            cur_row, cur_col = stack.pop()
-            # mark the current space as visited
-            maze[cur_row][cur_col] = -1
-            for (dr,dc) in actions:
-                new_row, new_col = cur_row, cur_col
-                # let's move as long as either we hit a wall (space=1) or we go out of bound
-                while 0 <= new_row + dr < nr and 0 <= new_col + dc < nc and maze[new_row + dr][new_col + dc] != 1:
-                    new_row = new_row + dr
-                    new_col = new_col + dc
-                # if starting from any (cur_row,cur_col) we land at the destination we immediately return
-                if [new_row, new_col] == destination:
-                        return True
-                # if not, we mark that destination as one that has already been visited and add it to the stack ...
-                # ... to be used as a new starting point
-                if maze[new_row][new_col] != -1:
-                    maze[new_row][new_col] = -1
-                    stack.append([new_row, new_col])
-        # finally if no path is found, return False
+            curr_row,curr_col=stack.pop()
+            maze[curr_row][curr_col]=-1
+            for i in actions:
+                new_row,new_col=curr_row,curr_col
+                while 0<=new_row+i[0]<m and 0<=new_col+i[1]<n and maze[new_row+i[0]][new_col+i[1]]!=1:
+                    new_row+=i[0]
+                    new_col+=i[1]
+                if [new_row,new_col]==destination:
+                    return True
+                if maze[new_row][new_col]!=-1:
+                    maze[new_row][new_col]=-1
+                    stack.append([new_row,new_col])
         return False
-        
