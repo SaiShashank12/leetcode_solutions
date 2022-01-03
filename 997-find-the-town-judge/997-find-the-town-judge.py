@@ -1,17 +1,13 @@
 class Solution:
-    def findJudge(self, N: int, trust: List[List[int]]) -> int:
-
-        if len(trust) < N - 1:
-            return -1
-    
-        indegree = [0] * (N + 1)
-        outdegree = [0] * (N + 1)
-
-        for a, b in trust:
-            outdegree[a] += 1
-            indegree[b] += 1
-
-        for i in range(1, N + 1):
-            if indegree[i] == N - 1 and outdegree[i] == 0:
-                return i
-        return -1
+    def findJudge(self, n: int, trust: List[List[int]]) -> int:
+        Graph=[set() for i in range(n)]
+        for i in trust:
+            Graph[i[0]-1].add(i[1]-1)
+        candidate_judge=-1
+        for i in range(len(Graph)):
+            if not Graph[i]:
+                candidate_judge=i
+        for j in range(len(Graph)):
+            if j!=candidate_judge and candidate_judge not in Graph[j]:
+                return -1
+        return candidate_judge+1
