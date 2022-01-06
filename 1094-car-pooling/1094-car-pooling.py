@@ -5,9 +5,9 @@ class Solution:
         for i in trips:
             timestamp[i[1]]-=i[0]
             timestamp[i[2]]+=i[0]
-        min_start=min(timestamp.keys())
-        max_end=max(timestamp.keys())
-        for i in range(min_start,max_end):
+        # min_start=min(timestamp.keys())
+        # max_end=max(timestamp.keys())
+        for i in sorted(timestamp.keys()):
             capacity+=timestamp[i]
             if capacity<0:
                 return False
