@@ -1,17 +1,14 @@
-from collections import defaultdict
 class Solution:
     def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
-        start=defaultdict(int)
-        end=defaultdict(int)
-        for i in trips:
-            start[i[1]]+=i[0]
-            end[i[2]]+=i[0]
-        min_start=min(start.keys())
-        max_end=max(end.keys())
-        for i in range(min_start,max_end):
-            capacity+=end[i]
-            capacity-=start[i]
-            if capacity<0:
+        timestamp = [0] * 1001
+        for trip in trips:
+            timestamp[trip[1]] += trip[0]
+            timestamp[trip[2]] -= trip[0]
+
+        used_capacity = 0
+        for passenger_change in timestamp:
+            used_capacity += passenger_change
+            if used_capacity > capacity:
                 return False
+
         return True
-            
