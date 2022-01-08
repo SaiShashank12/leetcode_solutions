@@ -1,10 +1,9 @@
 class Solution:
     def sumOddLengthSubarrays(self, arr: List[int]) -> int:
-        result=0
-        for i in range(0,len(arr)):
-            pick = 2*i+1
-            for j in range(0,len(arr)):
-                if j+pick>len(arr):
-                    break
-                result+=sum(arr[j:j+pick])
-        return result
+        # Brute Force O(n^3)
+        # Alternative O(n). Given the length n of arr, how many times will arr[k] appear in the total sum?
+        
+        res = 0
+        for i in range(len(arr)):
+            res += ((i + 1) * (len(arr) - i) + 1) // 2 * arr[i]
+        return res
