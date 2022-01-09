@@ -7,6 +7,6 @@ class Solution:
         for start in range(n - L + 1):
             tmp = s[start:start + L]
             if tmp in seen:
-                output.add(tmp)
+                output.add(tmp[:])
             seen.add(tmp)
         return output
