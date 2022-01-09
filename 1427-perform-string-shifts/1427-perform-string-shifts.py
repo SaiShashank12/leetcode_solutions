@@ -1,11 +1,14 @@
 class Solution:
-    def stringShift(self, string: str, shift: List[List[int]]) -> str:
+    def stringShift(self, s: str, shift: List[List[int]]) -> str:
+
+        # Count the number of left shifts. A right shift is a negative left shift.
+        left_shifts = 0
         for direction, amount in shift:
-            amount %= len(string)
-            if direction == 0:
-                # Move necessary amount of characters from start to end
-                string = string[amount:] + string[:amount]
-            else:
-                # Move necessary amount of characters from end to start
-                string = string[-amount:] + string[:-amount]
-        return string
+            if direction == 1:
+                amount = -amount
+            left_shifts += amount
+            
+        # Convert back to a positive, do left shifts, and return.
+        left_shifts %= len(s)
+        s = s[left_shifts:] + s[:left_shifts]
+        return s
