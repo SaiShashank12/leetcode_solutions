@@ -1,11 +1,3 @@
 class Solution:
     def addDigits(self, num: int) -> int:
-        
-        if num<10:
-            return num
-        num=num%10+self.addDigits(num//10)
-        if num>=10:
-            return self.addDigits(num)
-        return num
-            
-        
+        return 1 + (num - 1) % 9 if num else 0
