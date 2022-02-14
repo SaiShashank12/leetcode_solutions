@@ -7,6 +7,6 @@ class Solution:
             
             if len(set(s[left:right]))>2:
                 left+=1
-            if len(set(s[left:right]))<=2:
+            elif len(set(s[left:right]))<=2:
                 max_size=max(right-left,max_size)
         return max_size
