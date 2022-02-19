@@ -3,7 +3,6 @@ class Solution:
         right=left=0
         stack=[]
         longest=0
-        num_ones=sum(nums)
         num_zero=0
         while right<len(nums):
             if nums[right]==0 and not stack:
