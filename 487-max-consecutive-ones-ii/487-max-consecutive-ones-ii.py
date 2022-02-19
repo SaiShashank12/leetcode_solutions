@@ -11,7 +11,7 @@ class Solution:
             elif nums[right]==0 and stack:
                 left=stack.pop()+1
                 stack.append(right)
-                longest=max(longest,right-left)
+                
             
             longest=max(longest,right-left+1)
             right+=1
