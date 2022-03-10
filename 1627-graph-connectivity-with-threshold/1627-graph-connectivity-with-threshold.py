@@ -22,9 +22,9 @@ class Solution:
         def union(x,y,k):
             if common_divisor(x,y,k):
                 parent[find(x)]=find(y)
-        for z in range(threshold + 1, n + 1):
-            for x in range(z + z, n + 1, z):
-                union(z,x,threshold)
+        for i in range(threshold + 1, n + 1):
+            for j in range(i + i, n + 1, i):
+                union(i,j,threshold)
                 
         result=[]
         for i in queries:
